@@ -1,0 +1,35 @@
+<div class="container">
+
+    <div class="col-sm-6 col-sm-offset-3">
+
+        <h1><span class="fa fa-sign-in"></span> Create New User</h1>
+
+        <!-- show any messages that come back with authentication -->
+        <% if (message.length > 0) { %>
+            <div class="alert alert-danger"><%= message %></div>
+            <% } %>
+
+            <form action="/user/create" method="POST" id="sign-up-form" class="form-signin">
+
+
+                <div class="control-group">
+                    <input type="text" class="form-control" placeholder="your name" name="name">
+                </div>
+                <div class="control-group">
+                    <input type="text" class="form-control" placeholder="email address" name="email">
+                </div>
+
+                <div class="control-group">
+                    <input type="password" class="form-control" placeholder="password" name="password" id="password">
+                </div>
+
+
+
+                <input type="submit" class="btn btn-lg btn-primary btn-block" value="Create Account"/>
+                <input type="hidden" name="_csrf" value="<%= _csrf %>" />
+            </form>
+
+            <p>Already have an account? <a href="/">Login</a></p>
+
+    </div>
+</div>

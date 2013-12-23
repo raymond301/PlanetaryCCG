@@ -1,0 +1,55 @@
+
+<style type="text/css">
+    .form-signin {
+        max-width: 300px;
+        padding: 19px 29px 29px;
+        margin: 0 auto 20px;
+        background-color: #fff;
+        background-image:url('images/metallic.jpg');
+        border: 1px solid #e5e5e5;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+        -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+        box-shadow: 0 1px 2px rgba(0,0,0,.05);
+    }
+    .form-signin .form-signin-heading,
+    .form-signin .checkbox {
+        margin-bottom: 10px;
+        text-align: center;
+    }
+    .form-signin input[type="text"],
+    .form-signin input[type="password"] {
+        font-size: 16px;
+        height: auto;
+        margin-bottom: 15px;
+        padding: 7px 9px;
+    }
+</style>
+
+
+
+
+<div class="container">
+    </br>
+    <form class="form-signin" action="/session/create" method="POST">
+        <h2 class="form-signin-heading">Please Sign In</h2>
+
+        <div class="alert alert-error" style="display: none;">
+            <a class="close" data-dismiss="alert" href="#">×</a>Incorrect Username or Password!
+        </div>
+
+        <input name="username" type="text" class="input-block-level" placeholder="Username">
+        <input name="password" type="password" class="input-block-level" placeholder="Password">
+        <!--
+        <label class="checkbox">
+            <input type="checkbox" value="remember-me"> Remember me
+        </label>
+        -->
+        <a class="btn btn-large btn-primary" href="/user/new">Register</a>
+        <button class="btn btn-large btn-primary pull-right" type="submit">Log In</button>
+        <input type="hidden" name="_csrf" value="<%= _csrf %>" />
+    </form>
+
+</div> <!-- /container -->
