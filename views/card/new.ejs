@@ -1,0 +1,130 @@
+<script src="/linker/js/colorpicker.min.js"></script>
+<link rel="stylesheet" href="/linker/styles/colorpicker.css">
+
+
+<div class="container">
+    <div class="row clearfix">
+        <div class="span6">
+            <h2>Create: <%=cardType%> </h2></br>
+            <canvas id="myCanvas" width="250" height="380" style="border:1px solid #000000;">
+                Your browser does not support HTML5 Canvas element.
+            </canvas>
+        </div>
+        <div class="span6">
+
+            </br></br>
+            <label>Card Title</label>
+            <input id="title-box" type="text" placeholder="My Name" name="title">
+
+            </br>
+
+            <label>Background Color</label>
+            <div id="color-picker" class="cp-small">
+                <div class="picker-wrapper">
+                    <div id="picker" class="picker"></div>
+                    <div id="picker-indicator" class="picker-indicator"></div>
+                </div>
+                <div class="slide-wrapper">
+                    <div id="slide" class="slide"></div>
+                    <div id="slide-indicator" class="slide-indicator"></div>
+                </div>
+            </div>
+
+            </br> </br> </br>
+            </br> </br> </br>
+
+            <label>Amount</label>
+            <input id="title-box" type="text" placeholder="100" name="cost">
+
+            </br>
+
+            <label>Additional Description</label>
+            <input id="title-box" type="text" placeholder="Short Description" name="cost">
+
+            </br>
+
+            <label>Text Color</label>
+            <div class="btn-group" data-toggle="buttons-radio">
+                <button name="iconcolor" type="button" class="btn active" value="icon-white">White</button>
+                <button name="iconcolor" type="button" class="btn btn-inverse">Black</button>
+            </div>
+
+
+            <form id="form1" runat="server">
+                <input type='file' id="imgInp" />
+                <img id="blah" src="#" alt="your image" />
+            </form>
+
+
+
+
+        </div>
+    </div><!-- end row -->
+</div>
+
+
+<!-- Javascript required for ColorPicker -->
+<script type="text/javascript">
+    var canvas = document.getElementById("myCanvas");
+    var context = canvas.getContext('2d');
+
+    function titleLine(){
+        context.strokeStyle = '#000';
+        context.beginPath();
+        context.moveTo(10,30);
+        context.lineTo(240,30);
+        context.stroke();
+    };
+
+    function createTitle(){
+            //context.clearRect(0, 0, 250, 28); //Creates White Boxes
+            // Fill Text
+            context.lineWidth=1;
+            context.fillStyle="#000000";
+            context.lineStyle="#ffff00";
+            context.font="18px sans-serif";
+            context.fillText(document.getElementById('title-box').value, 20, 20);
+    };
+
+    cp = ColorPicker(document.getElementById('slide'), document.getElementById('picker'),
+            function(hex, hsv, rgb, mousePicker, mouseSlide) {
+                currentColor = hex;
+                ColorPicker.positionIndicators(
+                        document.getElementById('slide-indicator'),
+                        document.getElementById('picker-indicator'),
+                        mouseSlide, mousePicker
+                );
+                //document.body.style.backgroundColor = hex;
+                context.fillStyle = hex;
+                context.fillRect( 0, 0, 250, 380 );
+                titleLine();
+                createTitle()
+            });
+    cp.setHex('#FAFAFA');
+
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#blah').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#imgInp").change(function(){
+        readURL(this);
+    });
+
+
+    window.addEventListener('load', function () {
+        titleLine();
+        document.getElementById('title-box').oninput = function () {
+            createTitle();
+        };
+    }); //doc on load
+</script>
+<br class="clear"/>

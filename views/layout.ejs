@@ -6,80 +6,81 @@
     <!-- Viewport mobile tag for sensible mobile support -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    
-    <!--  
-        Stylesheets and Preprocessors
-        ==============================
+      <script src="/linker/js/jquery-1.10.2.min.js"></script>
 
-        You can always bring in CSS files manually with `link` tags, or asynchronously
-        on the client using a solution like AMD (RequireJS).  Or, if you like, you can
-        take advantage of Sails' boilerplate asset management.
+      <!--
+          Stylesheets and Preprocessors
+          ==============================
 
-        By default, stylesheets from your `assets/linker/styles` folder are included
-        here automatically.  Both CSS (.css) and LESS (.less) are supported.
-        In production, your styles will be minified and concatenated into a single file.
-        
-        To customize any part of the built-in behavior, just edit your Gruntfile.
-        For example, here are a few things you could do:
-            
-            + Change the order of your CSS files
-            + Import stylesheets from other directories
-            + Use a different or additional preprocessor, like SASS, SCSS or Stylus
-    -->
+          You can always bring in CSS files manually with `link` tags, or asynchronously
+          on the client using a solution like AMD (RequireJS).  Or, if you like, you can
+          take advantage of Sails' boilerplate asset management.
+
+          By default, stylesheets from your `assets/linker/styles` folder are included
+          here automatically.  Both CSS (.css) and LESS (.less) are supported.
+          In production, your styles will be minified and concatenated into a single file.
+
+          To customize any part of the built-in behavior, just edit your Gruntfile.
+          For example, here are a few things you could do:
+
+              + Change the order of your CSS files
+              + Import stylesheets from other directories
+              + Use a different or additional preprocessor, like SASS, SCSS or Stylus
+      -->
 
     <!--STYLES-->
-    <link rel="stylesheet" href="/linker/styles/bootstrap-responsive.css">
+    <link rel="stylesheet" href="/linker/styles/bootstrap-theme.css">
     <link rel="stylesheet" href="/linker/styles/bootstrap.css">
+    <link rel="stylesheet" href="/linker/styles/colorpicker.css">
     <!--STYLES END-->
+
+
   </head>
 
   <body>
 
 
+  <!-- Fixed navbar -->
+  <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-road"></span>&nbsp;Planetary Game</a>
+
+          <ul class="nav navbar-nav pull-right">
 
 
-  <div class="navbar navbar-fixed-top">
-      <div class="navbar-inner">
-          <div class="container"><!-- Collapsable nav bar -->
-              <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                  <span class="glyphicon glyphicon-fire"></span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-              </a>
+              <!--li class="active"><a href="#">Home</a></li-->
+              <% if (user) {%>
+                  <li><a href="#">Start a Game</a></li>
 
-              <!-- Your site name for the upper left corner of the site -->
-              <a class="brand">Planetary Game</a>
-
-
-              <!-- Start of the nav bar content -->
-              <div class="nav-collapse"><!-- Other nav bar content -->
-
-                  <!-- The drop down menu -->
-                  <ul class="nav pull-right">
-
-                      <% if (session.User) {%>
-                          <li><a href="/user/show/<%=user.id%>"><%=user.username%></a></li>
-                          <li class="divider-vertical"></li>
-                          <li><a href="/session/destroy">Logout</a></li>
-                          <li class="divider-vertical"></li>
+                  <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">Profile<b class="caret"></b></a>
+                      <ul class="dropdown-menu">
                           <li><a href="#">Decks</a></li>
-                      <%}%>
 
+                          <li class="divider"></li>
+                          <li><a href="/user/show/<%=user.id%>"><%=user.username%></a></li>
+                          <li><a href="/session/destroy">Logout</a></li>
+                          <!--li class="dropdown-header">Header</li-->
 
+                      </ul>
+                  </li>
+                  <li><a href="#"><i class="glyphicon glyphicon-user"></i></a></li>
 
-                  </ul>
-              </div>
-          </div>
+              <%}%>
+
+          </ul>
       </div>
   </div>
 
 
+  </br></br></br>
 
 
-
-
-
-  <%- body %>
+    <%- body %>
 
 
 
