@@ -47,13 +47,15 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-road"></span>&nbsp;Planetary Game</a>
+          <a class="navbar-brand" href="/"><span class="glyphicon glyphicon-road"></span>&nbsp;Planetary Game</a>
 
           <ul class="nav navbar-nav pull-right">
 
 
               <!--li class="active"><a href="#">Home</a></li-->
-              <% if (user) {%>
+
+              <!-- % if (typeof user !== 'undefined') {% -->
+              <% if (session.User) {%>
                   <li><a href="#">Start a Game</a></li>
 
                   <li class="dropdown">
@@ -62,7 +64,7 @@
                           <li><a href="#">Decks</a></li>
 
                           <li class="divider"></li>
-                          <li><a href="/user/show/<%=user.id%>"><%=user.username%></a></li>
+                          <li><a href="/user/show/<%=session.User.id%>"><%=session.User.username%></a></li>
                           <li><a href="/session/destroy">Logout</a></li>
                           <!--li class="dropdown-header">Header</li-->
 
