@@ -14,6 +14,8 @@
  *
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
+var fs = require('fs');
+
 
 module.exports = {
     
@@ -28,8 +30,52 @@ module.exports = {
 
 
   create: function(req, res, next) {
-        console.log(req.param);
+      if (req.method != 'POST')
+          return res.notFound();
 
+      console.log(req.body);
+
+
+      var base64Data = req.body['image64'].replace(/^data:image\/png;base64,/,"");
+
+      var randStr = Math.random().toString(36).substring(8);
+      var imagePath =  "assets/images/public/"+randStr+".png";
+      fs.writeFile(imagePath, base64Data, 'base64', function(err) {
+          console.log(err);
+      });
+
+      var cardObj = {
+          type: req.body['card_type'],
+          title: req.body['title'],
+          cost: req.body['cost'],
+          quote: req.body['desc'],
+          createdBy: req.session.User.id,
+          imagePath: imagePath
+      }
+
+
+
+
+      Card.create(cardObj, function cardCreated(err, card) {
+          // // If there's an error
+          if (err) {
+              console.log(err);
+              req.session.flash = {
+                  err: err
+              }
+
+              // If error redirect back
+              return res.redirect('/card/new/?type='+req.body['card_type']);
+          }
+
+          card.save(function(err, card) {
+              if (err) return next(err);
+
+              // After successfully creating the card
+              // redirect to the user profile page
+              res.redirect('/user/show/' + req.session.User.id);
+          });
+      });
   },
 
   /**

@@ -68,7 +68,7 @@ module.exports.routes = {
   // If you want to set up a route only for one in particular
   // (GET, POST, PUT, DELETE, etc.), just specify the verb before the path.
   // For example, if you have a `UserController` with a `signup` action,
-  // and somewhere else, you're serving a signup form looks like: 
+  // and somewhere else, you're serving a signup form looks like:
   //
   //		<form action="/signup">
   //			<input name="username" type="text"/>

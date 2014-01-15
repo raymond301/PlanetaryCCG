@@ -3,6 +3,7 @@
 
 
 <div class="container">
+
     <div class="row clearfix">
         <!-- Left hand side, preview card -->
         <div class="col-md-5">
@@ -16,7 +17,9 @@
         <!-- Right hand side, card attributes -->
         <div class="col-md-5">
 
-            <form class="form-horizontal" action="/session/create" method="POST" style="margin-top: 50px">
+            <form class="form-horizontal" action="/card/create" method="post" style="margin-top: 50px">
+
+                <input type="hidden" id="card-type" name="card_type" value="<%=cardType%>" />
 
                 <div class="form-group">
                     <label for="title-box" class="control-label col-xs-4">Card Title</label>
@@ -91,8 +94,12 @@
                 </div>
 
 
-                </br>
-                <button class="btn btn-large btn-success pull-right" type="submit">Create Card</button>
+                           <input type="hidden" id="image64-box" name="image64" value="" />
+                            <input type="hidden" name="_csrf" value="<%= _csrf %>" />
+
+
+                            </br>
+                <button class="btn btn-large btn-success pull-right" type="submit" onclick="generateImage();" >Create Card</button>
 
 
             </form>
@@ -107,6 +114,14 @@
     var canvas = document.getElementById("myCanvas");
     var context = canvas.getContext('2d');
     var img = new Image();
+
+
+    function generateImage(){
+        //alert('here');
+        var strDataURI = canvas.toDataURL();
+        document.getElementById('image64-box').value = strDataURI;
+    }
+
 
 
     function titleLine(){
