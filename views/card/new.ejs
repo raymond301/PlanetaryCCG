@@ -41,9 +41,12 @@
                 </div>
 
 
+                <%if(cardType === 'planet'){%>
+                    <div style="display: none">
+                <%}%>
 
 
-                <div class="form-group">
+                        <div class="form-group">
                     <label for="cost-box" class="control-label col-xs-4">
                         <%if(cardType === 'resource'){%>
                             Amount
@@ -55,6 +58,43 @@
                         <input class="form-control" id="cost-box" type="text" placeholder="100" name="cost">
                     </div>
                 </div>
+
+                <%if(cardType === 'planet'){%>
+                    </div>
+                    <%}%>
+
+
+
+                <%if(cardType !== 'ship' && cardType !== 'planet'){%>
+                    <div style="display: none">
+                <%}%>
+
+
+                                <div class="form-group">
+                                    <label for="cost-box" class="control-label col-xs-4">Attack</label>
+                                    <div class="col-xs-4">
+                                        <input class="form-control" id="atk-box" type="text" placeholder="100" name="atk">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="cost-box" class="control-label col-xs-4">Defense</label>
+                                    <div class="col-xs-4">
+                                        <input class="form-control" id="def-box" type="text" placeholder="100" name="def">
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label for="cost-box" class="control-label col-xs-4">Modifier Slots</label>
+                                    <div class="col-xs-3">
+                                        <input class="form-control" id="mod-box" type="number" min="0" max="10" placeholder="0" name="mods">
+                                    </div>
+                                </div>
+
+                <%if(cardType !== 'ship' && cardType !== 'planet'){%>
+                </div>
+                <%}%>
 
 
 
@@ -114,6 +154,7 @@
     var canvas = document.getElementById("myCanvas");
     var context = canvas.getContext('2d');
     var img = new Image();
+    var card_type = '<%= cardType %>';
 
 
     function generateImage(){
@@ -130,6 +171,11 @@
         context.moveTo(10,30);
         context.lineTo(240,30);
         context.stroke();
+        context.lineWidth=1;
+        context.fillStyle=document.getElementById('text-color').value;
+        context.lineStyle="#ffff00";
+        context.font="18px sans-serif";
+        context.fillText('['+card_type.charAt(0).toUpperCase()+']', 222, 20);
     };
 
     function createTitle(){
@@ -138,7 +184,7 @@
             context.lineWidth=1;
             context.fillStyle=document.getElementById('text-color').value;
             context.lineStyle="#ffff00";
-            context.font="18px sans-serif";
+            context.font = "italic bold 16pt Courier";
             context.fillText(document.getElementById('title-box').value, 20, 20);
     };
 
@@ -149,6 +195,25 @@
         context.lineStyle="#ffff00";
         context.font="20px sans-serif";
         context.fillText('\u20AC '+document.getElementById('cost-box').value, 10, 365);
+    }
+
+    function addATKnDEF(){
+        context.lineWidth=1;
+        context.fillStyle=document.getElementById('text-color').value;
+        context.lineStyle="#ffff00";
+        context.font="18px sans-serif";
+        context.fillText(document.getElementById('atk-box').value+' / '+document.getElementById('def-box').value, 150, 365);
+    }
+
+    function drawMods(){
+        var n = document.getElementById('mod-box').value;
+        context.fillStyle=document.getElementById('text-color').value;
+        for(i=0; i < n; i++) {
+            var yBox = 230 - (i*11);
+            //alert(yBox);
+            context.fillRect (yBox, 36, 7, 7);
+        }
+
     }
 
     function addDesc(){
@@ -197,6 +262,12 @@
                 createTitle();
                 addCost();
                 addDesc();
+
+               if( card_type === 'ship') {
+                   addATKnDEF();
+                   drawMods();
+                }
+                readURL( document.getElementById('imgInp') );
             });
     cp.setHex('#FAFAFA');
 
@@ -208,9 +279,8 @@
             reader.onload = function (e) {
                 //$('#blah').attr('src', e.target.result);
                 img.src = e.target.result;
-                context.drawImage(img, 20, 40, 210, img.height*(210/img.width));
+                context.drawImage(img, 20, 50, 210, img.height*(210/img.width));
             }
-
             reader.readAsDataURL(input.files[0]);
         }
     }
@@ -230,6 +300,15 @@
         };
         document.getElementById('desc-box').oninput = function () {
             addDesc();
+        };
+        document.getElementById('atk-box').onchange = function () {
+            addATKnDEF();
+        };
+        document.getElementById('def-box').onchange = function () {
+            addATKnDEF();
+        };
+        document.getElementById('mod-box').onchange = function () {
+            drawMods();
         };
     }); //doc on load
 </script>

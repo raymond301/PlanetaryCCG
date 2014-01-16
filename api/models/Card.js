@@ -23,6 +23,7 @@ module.exports = {
         defense: 'integer',
         cost: 'integer',
         quote: 'string',
+        modifierSlots: 'integer',
         specialAbilities: 'array',
         createdBy: {
             type: 'string',

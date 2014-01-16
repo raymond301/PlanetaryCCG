@@ -50,7 +50,11 @@ module.exports = {
           cost: req.body['cost'],
           quote: req.body['desc'],
           createdBy: req.session.User.id,
-          imagePath: imagePath
+          imagePath: imagePath,
+          //Advanced attributes
+          attack: req.body['atk'],
+          defense: req.body['def'],
+          modifierSlots: req.body['mods']
       }
 
 
